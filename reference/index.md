@@ -10,7 +10,19 @@
 - [`prepare_input()`](https://lguillier.github.io/strainselect_package/reference/prepare_input.md)
   : Prepare the metadata table used for strain selection
 
-## Clustering method
+## Strain selection in one step
+
+Optimal number of strains, maximum number of strains, export and report.
+
+- [`select_strains()`](https://lguillier.github.io/strainselect_package/reference/select_strains.md)
+  : Select strains to sequence, with or without a maximum number of
+  strains
+- [`export_selection()`](https://lguillier.github.io/strainselect_package/reference/export_selection.md)
+  : Export the strain selection with the original metadata
+- [`report_selection()`](https://lguillier.github.io/strainselect_package/reference/report_selection.md)
+  : Write an HTML report of the strain selection
+
+## Clustering method, step by step
 
 When the number of strains that can be sequenced is limited.
 

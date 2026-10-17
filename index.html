@@ -86,7 +86,7 @@ image
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>The package ships with <code>salmonella_strains</code>, an example table of 100 <em>Salmonella</em> strains described by 24 variables. We base the selection on 6 of them and on the year of sampling.</p>
+<p>The package ships with <code>salmonella_strains</code>, an example table of 100 <em>Salmonella</em> strains described by 22 variables. We base the selection on 6 of them and on the year of sampling.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lguillier/strainselect_package" class="external-link">strainselect</a></span><span class="op">)</span></span>
 <span></span>
@@ -107,15 +107,44 @@ image
 <span><span class="co">#&gt; 2020LSAL00152          Eco-système     Source/captage de l'eau  2020</span></span>
 <span><span class="co">#&gt; 2020LSAL00163 Alimentation humaine Transformation industrielle  2020</span></span></code></pre></div>
 <div class="section level3">
-<h3 id="clustering-method-a-fixed-number-of-strains">Clustering method: a fixed number of strains<a class="anchor" aria-label="anchor" href="#clustering-method-a-fixed-number-of-strains"></a>
+<h3 id="quick-start-how-many-strains-and-which-ones">Quick start: how many strains, and which ones?<a class="anchor" aria-label="anchor" href="#quick-start-how-many-strains-and-which-ones"></a>
+</h3>
+<p><code><a href="reference/select_strains.html">select_strains()</a></code> finds the optimal number of strains and takes into account the maximum number of strains you can sequence (<code>n_max</code>):</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/select_strains.html">select_strains</a></span><span class="op">(</span><span class="va">prepared_data</span>, n_max <span class="op">=</span> <span class="fl">20</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">res</span></span>
+<span><span class="co">#&gt; Strain selection (clustering method)</span></span>
+<span><span class="co">#&gt;   strains: 100 - distinct profiles: 61 </span></span>
+<span><span class="co">#&gt;   optimal number of clusters (k_opt): 61 </span></span>
+<span><span class="co">#&gt;   maximum number of strains (n_max): 20 </span></span>
+<span><span class="co">#&gt;   selected strains: 20 (selected: 20) </span></span>
+<span><span class="co">#&gt;   optimal groups not represented: 41 out of 61</span></span></code></pre></div>
+<p>The same with the profile method (one strain per group of identical strains, largest groups first):</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/select_strains.html">select_strains</a></span><span class="op">(</span><span class="va">prepared_data</span>, n_max <span class="op">=</span> <span class="fl">20</span>, method <span class="op">=</span> <span class="st">"profile"</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Strain selection (profile method)</span></span>
+<span><span class="co">#&gt;   strains: 100 - distinct profiles: 61 </span></span>
+<span><span class="co">#&gt;   groups of identical strains: 61 </span></span>
+<span><span class="co">#&gt;   maximum number of strains (n_max): 20 </span></span>
+<span><span class="co">#&gt;   selected strains: 20 (selected: 20) </span></span>
+<span><span class="co">#&gt;   groups not represented: 41 out of 61</span></span></code></pre></div>
+<p>Export the original metadata with the selection, and write an HTML report:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/export_selection.html">export_selection</a></span><span class="op">(</span><span class="va">res</span>, data <span class="op">=</span> <span class="va">salmonella_strains</span>, id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>,</span>
+<span>                 file <span class="op">=</span> <span class="st">"selection.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/report_selection.html">report_selection</a></span><span class="op">(</span><span class="va">res</span>, file <span class="op">=</span> <span class="st">"selection_report.html"</span>,</span>
+<span>                 data <span class="op">=</span> <span class="va">salmonella_strains</span>, id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="clustering-method-step-by-step">Clustering method, step by step<a class="anchor" aria-label="anchor" href="#clustering-method-step-by-step"></a>
 </h3>
 <p>The average silhouette width helps choosing the number of clusters: look for a maximum or a plateau.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gower</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/assess_gower.html">assess_gower</a></span><span class="op">(</span><span class="va">prepared_data</span>, graph <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/cstats_table.html">cstats_table</a></span><span class="op">(</span><span class="va">gower</span><span class="op">$</span><span class="va">gower_dist</span>, <span class="va">gower</span><span class="op">$</span><span class="va">aggl.clust.c</span>, k <span class="op">=</span> <span class="fl">50</span>, step <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-silhouette-1.png" width="100%"></p>
 <p>Then select one strain per cluster, here 20 strains:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">selection</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/select_silhouette.html">select_silhouette</a></span><span class="op">(</span><span class="va">prepared_data</span>, <span class="va">gower</span><span class="op">$</span><span class="va">gower_dist</span>, k <span class="op">=</span> <span class="fl">20</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">selection</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cluster"</span>, <span class="st">"size"</span>, <span class="st">"selected"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="co">#&gt;               cluster size      selected</span></span>
@@ -136,12 +165,12 @@ image
 <h3 id="profile-method-one-strain-per-distinct-profile">Profile method: one strain per distinct profile<a class="anchor" aria-label="anchor" href="#profile-method-one-strain-per-distinct-profile"></a>
 </h3>
 <p>The binary table of modalities can be explored with an UpSet plot (here the 12 most frequent modalities):</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">upset_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_upset.html">prepare_upset</a></span><span class="op">(</span><span class="va">prepared_data</span><span class="op">)</span></span>
 <span><span class="fu">UpSetR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/UpSetR/man/upset.html" class="external-link">upset</a></span><span class="op">(</span><span class="va">upset_data</span>, nsets <span class="op">=</span> <span class="fl">12</span>, order.by <span class="op">=</span> <span class="st">"freq"</span>, nintersects <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>              mb.ratio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.55</span>, <span class="fl">0.45</span><span class="op">)</span>, text.scale <span class="op">=</span> <span class="fl">1.1</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-upset-1.png" width="100%"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">profiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/define_profiles.html">define_profiles</a></span><span class="op">(</span><span class="va">upset_data</span><span class="op">)</span></span>
 <span><span class="va">selection</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/select_profiles.html">select_profiles</a></span><span class="op">(</span><span class="va">profiles</span>, <span class="va">prepared_data</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">selection</span><span class="op">$</span><span class="va">selected</span><span class="op">)</span><span class="op">)</span>   <span class="co"># number of strains to sequence</span></span>

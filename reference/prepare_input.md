@@ -109,8 +109,8 @@ head(prepared_data)
 #> 2020LSAL00176 Lieu d'exploitation, d'élevage, ou de culture  2020
 #> 2020LSAL00177 Lieu d'exploitation, d'élevage, ou de culture  2020
 # the same with column positions
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c(5, 8, 11, 12, 15, 22),
+                               id = 1, date = 15)
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 ```

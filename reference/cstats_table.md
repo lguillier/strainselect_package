@@ -62,14 +62,17 @@ followed by cluster size columns. Values are rounded to 2 decimals.
 
 Other clustering method:
 [`assess_gower()`](https://lguillier.github.io/strainselect_package/reference/assess_gower.md),
-[`select_silhouette()`](https://lguillier.github.io/strainselect_package/reference/select_silhouette.md)
+[`export_selection()`](https://lguillier.github.io/strainselect_package/reference/export_selection.md),
+[`report_selection()`](https://lguillier.github.io/strainselect_package/reference/report_selection.md),
+[`select_silhouette()`](https://lguillier.github.io/strainselect_package/reference/select_silhouette.md),
+[`select_strains()`](https://lguillier.github.io/strainselect_package/reference/select_strains.md)
 
 ## Examples
 
 ``` r
 raw_data <- salmonella_strains
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+                               id = "IDENTIFIANT", date = "DATE_PRELEVEMENT")
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 gower <- assess_gower(prepared_data, graph = FALSE)

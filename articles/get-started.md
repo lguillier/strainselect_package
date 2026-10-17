@@ -33,7 +33,7 @@ Both methods start with
 which cleans the raw table.
 
 The examples below use `salmonella_strains`, a table of 100 *Salmonella*
-strains described by 24 variables, shipped with the package. The
+strains described by 22 variables, shipped with the package. The
 selection is based on 6 variables: `CONTEXTE`, `MATRICE1`, `REGION`,
 `SECTEUR`, `LIEUPVT` and the year extracted from `DATE_PRELEVEMENT`.
 
@@ -109,8 +109,8 @@ head(prepared_data)
 #> 2020LSAL00176 Lieu d'exploitation, d'élevage, ou de culture  2020
 #> 2020LSAL00177 Lieu d'exploitation, d'élevage, ou de culture  2020
 # the same with column positions
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c(5, 8, 11, 12, 15, 22),
+                               id = 1, date = 15)
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 ```
@@ -137,8 +137,8 @@ matrix, and the dendrogram is drawn when `graph = TRUE`.
 ``` r
 
 raw_data <- salmonella_strains
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+                               id = "IDENTIFIANT", date = "DATE_PRELEVEMENT")
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 gower <- assess_gower(prepared_data, graph = TRUE)
@@ -162,8 +162,8 @@ time.
 ``` r
 
 raw_data <- salmonella_strains
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+                               id = "IDENTIFIANT", date = "DATE_PRELEVEMENT")
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 gower <- assess_gower(prepared_data, graph = FALSE)
@@ -202,8 +202,8 @@ reproducible.
 ``` r
 
 raw_data <- salmonella_strains
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+                               id = "IDENTIFIANT", date = "DATE_PRELEVEMENT")
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 gower <- assess_gower(prepared_data, graph = FALSE)
@@ -216,6 +216,195 @@ unique(selection$selected)
 #>  [9] "2020LSAL00660" "2020LSAL00668" "2020LSAL00724" "2020LSAL00790"
 #> [13] "2020LSAL00912" "2020LSAL00792" "2020LSAL00866" "2020LSAL00892"
 #> [17] "2020LSAL01016" "2020LSAL00994" "2020LSAL01040" "2020LSAL01188"
+```
+
+## Selecting strains for a sequencing budget: select_strains
+
+[`select_strains()`](https://lguillier.github.io/strainselect_package/reference/select_strains.md)
+runs the whole clustering method in one step and answers the practical
+question “*I can sequence at most `n_max` strains: which ones?*”.
+
+1.  It computes the Gower distances and the clustering tree (as
+    [`assess_gower()`](https://lguillier.github.io/strainselect_package/reference/assess_gower.md)),
+    then the average silhouette width for every number of clusters from
+    2 to the number of distinct profiles. The number of clusters with
+    the largest average silhouette width is the **optimal number of
+    clusters** `k_opt`.
+2.  It selects the strains according to the budget `n_max`:
+    - no budget (`n_max = NULL`): one strain per optimal cluster,
+      i.e. `k_opt` strains, with the status `"optimal"`;
+    - budget larger than the optimum (`n_max >= k_opt`): the `k_opt`
+      optimal strains, completed up to `n_max` strains (status
+      `"supplementary"`) by cutting the tree into `n_max` clusters. Use
+      `fill = FALSE` to stop at the optimum. As the clusters are nested,
+      each supplementary strain comes from a cluster that does not
+      contain an optimal strain yet;
+    - budget smaller than the optimum (`n_max < k_opt`): the tree is cut
+      into `n_max` clusters and one strain is selected in each (status
+      `"selected"`). The optimal groups that are not represented by any
+      selected strain are listed, so that the user knows what is missed.
+
+In each cluster, the selected strain is the one with the largest
+silhouette width, i.e. the best clustered one (ties are broken at
+random, use `seed` for reproducibility).
+
+With categorical metadata, identical strains are at distance 0, so the
+optimum is often close to the number of distinct profiles. Supplementary
+strains then mostly have the same metadata as already selected strains:
+they do not add diversity regarding the metadata, but may be useful as
+replicates.
+
+`select_strains(method = "profile")` applies the same logic to the
+profile method. The strains with identical metadata form groups, sorted
+by decreasing size (groups of the same size in random order); one strain
+per group is the optimal selection:
+
+- budget smaller than the number of groups: one strain in each of the
+  `n_max` largest groups — the most frequent profiles are favoured, and
+  the smallest groups (often strains with a unique profile) are listed
+  as not represented;
+- budget larger than the number of groups: one strain per group, then
+  supplementary strains added turn by turn — a second strain in each
+  group that has one, from the largest group to the smallest, then a
+  third strain, and so on.
+
+Within a group, the strains have the same metadata and are chosen at
+random (use `seed` for reproducibility).
+
+``` r
+
+prepared_data <- prepare_input(
+  salmonella_strains,
+  col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+  id = "IDENTIFIANT", date = "DATE_PRELEVEMENT"
+)
+#> no duplicate ID
+#> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
+# clustering method, no budget: optimal number of strains
+res <- select_strains(prepared_data, seed = 1)
+res
+#> Strain selection (clustering method)
+#>   strains: 100 - distinct profiles: 61 
+#>   optimal number of clusters (k_opt): 61 
+#>   maximum number of strains (n_max): not given
+#>   selected strains: 61 (optimal: 61)
+plot(res)
+```
+
+![](get-started_files/figure-html/examples-select_strains-1.png)
+
+``` r
+
+# budget smaller than the optimum
+res_20 <- select_strains(prepared_data, n_max = 20, seed = 1)
+res_20
+#> Strain selection (clustering method)
+#>   strains: 100 - distinct profiles: 61 
+#>   optimal number of clusters (k_opt): 61 
+#>   maximum number of strains (n_max): 20 
+#>   selected strains: 20 (selected: 20) 
+#>   optimal groups not represented: 41 out of 61
+head(res_20$table[, c("cluster", "optimal_group", "selected", "status")])
+#>               cluster optimal_group selected       status
+#> 2020LSAL00151       1             1    FALSE not selected
+#> 2020LSAL00152       1             1    FALSE not selected
+#> 2020LSAL00163       2             2    FALSE not selected
+#> 2020LSAL00167       2             3    FALSE not selected
+#> 2020LSAL00176       3             4    FALSE not selected
+#> 2020LSAL00177       3             5     TRUE     selected
+# profile method, budget larger than the number of distinct profiles
+res_profile <- select_strains(prepared_data, n_max = 75, method = "profile", seed = 1)
+res_profile
+#> Strain selection (profile method)
+#>   strains: 100 - distinct profiles: 61 
+#>   groups of identical strains: 61 
+#>   maximum number of strains (n_max): 75 
+#>   selected strains: 75 (optimal: 61, supplementary: 14)
+plot(res_profile)
+```
+
+![](get-started_files/figure-html/examples-select_strains-2.png)
+
+``` r
+
+head(res_profile$groups)
+#>   group size n_selected
+#> 1     1   10          2
+#> 2     2    7          2
+#> 3     3    5          2
+#> 4     4    4          2
+#> 5     5    3          2
+#> 6     6    3          2
+#>                                                                                                                                                    profile
+#> 1                                                             Alerte Produit | Viande de dinde | Pays de la Loire | Alimentation humaine | Abattage | 2020
+#> 2                     Alerte Produit | Bovins | Auvergne Rhone Alpes | Santé et production animales | Lieu d'exploitation, d'élevage, ou de culture | 2020
+#> 3                                          Surveillance | Viande de dinde | Nouvelle Aquitaine | Alimentation humaine | Transformation industrielle | 2020
+#> 4                                   Surveillance | Viande porcine | Provence Alpes Cote d Azur | Alimentation humaine | Transformation industrielle | 2020
+#> 5 Programmes de contrôle et d'éradication | Gallus gallus | Bretagne | Santé et production animales | Lieu d'exploitation, d'élevage, ou de culture | 2020
+#> 6                                                            Surveillance | Viande de canard | Nouvelle Aquitaine | Alimentation humaine | Abattage | 2020
+```
+
+### Exporting the result: export_selection
+
+[`export_selection()`](https://lguillier.github.io/strainselect_package/reference/export_selection.md)
+returns — and optionally writes to a CSV file — the original metadata
+table with the columns added by
+[`select_strains()`](https://lguillier.github.io/strainselect_package/reference/select_strains.md).
+The file can be opened in a spreadsheet and filtered on `selected` to
+get the list of strains to sequence.
+
+``` r
+
+prepared_data <- prepare_input(
+  salmonella_strains,
+  col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+  id = "IDENTIFIANT", date = "DATE_PRELEVEMENT"
+)
+#> no duplicate ID
+#> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
+res <- select_strains(prepared_data, n_max = 20, seed = 1)
+selection <- export_selection(res, data = salmonella_strains, id = "IDENTIFIANT")
+# the strains to sequence, with all their metadata
+head(selection[selection$selected, c("IDENTIFIANT", "REGION", "status")])
+#>      IDENTIFIANT                     REGION   status
+#> 6  2020LSAL00177                   Bretagne selected
+#> 14 2020LSAL00454            Hauts de France selected
+#> 20 2020LSAL00487              Ile de France selected
+#> 22 2020LSAL00506                       <NA> selected
+#> 27 2020LSAL00549 Provence Alpes Cote d Azur selected
+#> 36 2020LSAL00660                  Occitanie selected
+# write the table to a CSV file
+export_selection(res, data = salmonella_strains, id = "IDENTIFIANT",
+                 file = file.path(tempdir(), "selection.csv"))
+#> selection written to /tmp/RtmpyGhZ1r/selection.csv
+```
+
+### Reporting: report_selection
+
+[`report_selection()`](https://lguillier.github.io/strainselect_package/reference/report_selection.md)
+writes an HTML report of the selection: the parameters, the silhouette
+curve with the optimum and the budget, the list of the selected strains,
+the optimal groups that are not represented and the size of each
+cluster. Together with the CSV file of
+[`export_selection()`](https://lguillier.github.io/strainselect_package/reference/export_selection.md),
+it documents the choice of the strains to sequence.
+
+``` r
+
+prepared_data <- prepare_input(
+  salmonella_strains,
+  col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+  id = "IDENTIFIANT", date = "DATE_PRELEVEMENT"
+)
+#> no duplicate ID
+#> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
+res <- select_strains(prepared_data, n_max = 20, seed = 1)
+if (requireNamespace("rmarkdown", quietly = TRUE) && rmarkdown::pandoc_available()) {
+  report_selection(res, file = file.path(tempdir(), "selection.html"),
+                   data = salmonella_strains, id = "IDENTIFIANT")
+}
+#> selection written to /tmp/RtmpyGhZ1r/selection.csv
+#> report written to /tmp/RtmpyGhZ1r/selection.html
 ```
 
 ## Profile method
@@ -240,8 +429,8 @@ modality of each metadata (named `<metadata> _ <modality>`), filled with
 ``` r
 
 raw_data <- salmonella_strains
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+                               id = "IDENTIFIANT", date = "DATE_PRELEVEMENT")
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 upset_data <- prepare_upset(prepared_data)
@@ -310,8 +499,8 @@ a profile shared by no other strain forms a group with a single strain.
 ``` r
 
 raw_data <- salmonella_strains
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+                               id = "IDENTIFIANT", date = "DATE_PRELEVEMENT")
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 upset_data <- prepare_upset(prepared_data)
@@ -332,8 +521,8 @@ them is chosen at random. Use `seed` to make the selection reproducible.
 ``` r
 
 raw_data <- salmonella_strains
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+                               id = "IDENTIFIANT", date = "DATE_PRELEVEMENT")
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 upset_profiles <- define_profiles(prepare_upset(prepared_data))

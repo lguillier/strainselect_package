@@ -42,14 +42,15 @@ A data frame with the same row names as `data` and three columns:
 
 Other profile method:
 [`prepare_upset()`](https://lguillier.github.io/strainselect_package/reference/prepare_upset.md),
-[`select_profiles()`](https://lguillier.github.io/strainselect_package/reference/select_profiles.md)
+[`select_profiles()`](https://lguillier.github.io/strainselect_package/reference/select_profiles.md),
+[`select_strains()`](https://lguillier.github.io/strainselect_package/reference/select_strains.md)
 
 ## Examples
 
 ``` r
 raw_data <- salmonella_strains
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17)
+prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+                               id = "IDENTIFIANT", date = "DATE_PRELEVEMENT")
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 upset_data <- prepare_upset(prepared_data)

@@ -93,7 +93,7 @@ is represented.</li>
 <p>Both methods start with <code><a href="../reference/prepare_input.html">prepare_input()</a></code>, which cleans
 the raw table.</p>
 <p>The examples below use <code>salmonella_strains</code>, a table of
-100 <em>Salmonella</em> strains described by 24 variables, shipped with
+100 <em>Salmonella</em> strains described by 22 variables, shipped with
 the package. The selection is based on 6 variables:
 <code>CONTEXTE</code>, <code>MATRICE1</code>, <code>REGION</code>,
 <code>SECTEUR</code>, <code>LIEUPVT</code> and the year extracted from
@@ -169,8 +169,8 @@ for instance <code>date_format = "%Y-%m-%d"</code> for dates such as
 <span><span class="co">#&gt; 2020LSAL00176 Lieu d'exploitation, d'élevage, ou de culture  2020</span></span>
 <span><span class="co">#&gt; 2020LSAL00177 Lieu d'exploitation, d'élevage, ou de culture  2020</span></span>
 <span><span class="co"># the same with column positions</span></span>
-<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
-<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">8</span>, <span class="fl">11</span>, <span class="fl">12</span>, <span class="fl">15</span>, <span class="fl">22</span><span class="op">)</span>,</span>
+<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">15</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
 <span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span></code></pre></div>
 </div>
@@ -192,8 +192,8 @@ linkage is then performed on this matrix, and the dendrogram is drawn
 when <code>graph = TRUE</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
-<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
-<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>                               id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
 <span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
 <span><span class="va">gower</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assess_gower.html">assess_gower</a></span><span class="op">(</span><span class="va">prepared_data</span>, graph <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -213,8 +213,8 @@ of strains that can be sequenced; a larger <code>step</code> reduces the
 computing time.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
-<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
-<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>                               id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
 <span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
 <span><span class="va">gower</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assess_gower.html">assess_gower</a></span><span class="op">(</span><span class="va">prepared_data</span>, graph <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -247,8 +247,8 @@ silhouette width in a cluster, one of them is chosen at random; use
 <code>seed</code> to make this choice reproducible.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
-<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
-<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>                               id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
 <span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
 <span><span class="va">gower</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/assess_gower.html">assess_gower</a></span><span class="op">(</span><span class="va">prepared_data</span>, graph <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -261,6 +261,181 @@ silhouette width in a cluster, one of them is chosen at random; use
 <span><span class="co">#&gt;  [9] "2020LSAL00660" "2020LSAL00668" "2020LSAL00724" "2020LSAL00790"</span></span>
 <span><span class="co">#&gt; [13] "2020LSAL00912" "2020LSAL00792" "2020LSAL00866" "2020LSAL00892"</span></span>
 <span><span class="co">#&gt; [17] "2020LSAL01016" "2020LSAL00994" "2020LSAL01040" "2020LSAL01188"</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="selecting-strains-for-a-sequencing-budget-select_strains">Selecting strains for a sequencing budget: select_strains<a class="anchor" aria-label="anchor" href="#selecting-strains-for-a-sequencing-budget-select_strains"></a>
+</h2>
+<p><code><a href="../reference/select_strains.html">select_strains()</a></code> runs the whole clustering method in one
+step and answers the practical question “<em>I can sequence at most
+<code>n_max</code> strains: which ones?</em>”.</p>
+<ol style="list-style-type: decimal">
+<li>It computes the Gower distances and the clustering tree (as
+<code><a href="../reference/assess_gower.html">assess_gower()</a></code>), then the average silhouette width for
+every number of clusters from 2 to the number of distinct profiles. The
+number of clusters with the largest average silhouette width is the
+<strong>optimal number of clusters</strong> <code>k_opt</code>.</li>
+<li>It selects the strains according to the budget <code>n_max</code>:
+<ul>
+<li>no budget (<code>n_max = NULL</code>): one strain per optimal
+cluster, i.e. <code>k_opt</code> strains, with the status
+<code>"optimal"</code>;</li>
+<li>budget larger than the optimum (<code>n_max &gt;= k_opt</code>): the
+<code>k_opt</code> optimal strains, completed up to <code>n_max</code>
+strains (status <code>"supplementary"</code>) by cutting the tree into
+<code>n_max</code> clusters. Use <code>fill = FALSE</code> to stop at
+the optimum. As the clusters are nested, each supplementary strain comes
+from a cluster that does not contain an optimal strain yet;</li>
+<li>budget smaller than the optimum (<code>n_max &lt; k_opt</code>): the
+tree is cut into <code>n_max</code> clusters and one strain is selected
+in each (status <code>"selected"</code>). The optimal groups that are
+not represented by any selected strain are listed, so that the user
+knows what is missed.</li>
+</ul>
+</li>
+</ol>
+<p>In each cluster, the selected strain is the one with the largest
+silhouette width, i.e. the best clustered one (ties are broken at
+random, use <code>seed</code> for reproducibility).</p>
+<p>With categorical metadata, identical strains are at distance 0, so
+the optimum is often close to the number of distinct profiles.
+Supplementary strains then mostly have the same metadata as already
+selected strains: they do not add diversity regarding the metadata, but
+may be useful as replicates.</p>
+<p><code>select_strains(method = "profile")</code> applies the same
+logic to the profile method. The strains with identical metadata form
+groups, sorted by decreasing size (groups of the same size in random
+order); one strain per group is the optimal selection:</p>
+<ul>
+<li>budget smaller than the number of groups: one strain in each of the
+<code>n_max</code> largest groups — the most frequent profiles are
+favoured, and the smallest groups (often strains with a unique profile)
+are listed as not represented;</li>
+<li>budget larger than the number of groups: one strain per group, then
+supplementary strains added turn by turn — a second strain in each group
+that has one, from the largest group to the smallest, then a third
+strain, and so on.</li>
+</ul>
+<p>Within a group, the strains have the same metadata and are chosen at
+random (use <code>seed</code> for reproducibility).</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span></span>
+<span>  <span class="va">salmonella_strains</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>  id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; no duplicate ID</span></span>
+<span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
+<span><span class="co"># clustering method, no budget: optimal number of strains</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/select_strains.html">select_strains</a></span><span class="op">(</span><span class="va">prepared_data</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">res</span></span>
+<span><span class="co">#&gt; Strain selection (clustering method)</span></span>
+<span><span class="co">#&gt;   strains: 100 - distinct profiles: 61 </span></span>
+<span><span class="co">#&gt;   optimal number of clusters (k_opt): 61 </span></span>
+<span><span class="co">#&gt;   maximum number of strains (n_max): not given</span></span>
+<span><span class="co">#&gt;   selected strains: 61 (optimal: 61)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
+<p><img src="get-started_files/figure-html/examples-select_strains-1.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># budget smaller than the optimum</span></span>
+<span><span class="va">res_20</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/select_strains.html">select_strains</a></span><span class="op">(</span><span class="va">prepared_data</span>, n_max <span class="op">=</span> <span class="fl">20</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">res_20</span></span>
+<span><span class="co">#&gt; Strain selection (clustering method)</span></span>
+<span><span class="co">#&gt;   strains: 100 - distinct profiles: 61 </span></span>
+<span><span class="co">#&gt;   optimal number of clusters (k_opt): 61 </span></span>
+<span><span class="co">#&gt;   maximum number of strains (n_max): 20 </span></span>
+<span><span class="co">#&gt;   selected strains: 20 (selected: 20) </span></span>
+<span><span class="co">#&gt;   optimal groups not represented: 41 out of 61</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res_20</span><span class="op">$</span><span class="va">table</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cluster"</span>, <span class="st">"optimal_group"</span>, <span class="st">"selected"</span>, <span class="st">"status"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;               cluster optimal_group selected       status</span></span>
+<span><span class="co">#&gt; 2020LSAL00151       1             1    FALSE not selected</span></span>
+<span><span class="co">#&gt; 2020LSAL00152       1             1    FALSE not selected</span></span>
+<span><span class="co">#&gt; 2020LSAL00163       2             2    FALSE not selected</span></span>
+<span><span class="co">#&gt; 2020LSAL00167       2             3    FALSE not selected</span></span>
+<span><span class="co">#&gt; 2020LSAL00176       3             4    FALSE not selected</span></span>
+<span><span class="co">#&gt; 2020LSAL00177       3             5     TRUE     selected</span></span>
+<span><span class="co"># profile method, budget larger than the number of distinct profiles</span></span>
+<span><span class="va">res_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/select_strains.html">select_strains</a></span><span class="op">(</span><span class="va">prepared_data</span>, n_max <span class="op">=</span> <span class="fl">75</span>, method <span class="op">=</span> <span class="st">"profile"</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">res_profile</span></span>
+<span><span class="co">#&gt; Strain selection (profile method)</span></span>
+<span><span class="co">#&gt;   strains: 100 - distinct profiles: 61 </span></span>
+<span><span class="co">#&gt;   groups of identical strains: 61 </span></span>
+<span><span class="co">#&gt;   maximum number of strains (n_max): 75 </span></span>
+<span><span class="co">#&gt;   selected strains: 75 (optimal: 61, supplementary: 14)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res_profile</span><span class="op">)</span></span></code></pre></div>
+<p><img src="get-started_files/figure-html/examples-select_strains-2.png" class="r-plt" alt="" width="700"></p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">res_profile</span><span class="op">$</span><span class="va">groups</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   group size n_selected</span></span>
+<span><span class="co">#&gt; 1     1   10          2</span></span>
+<span><span class="co">#&gt; 2     2    7          2</span></span>
+<span><span class="co">#&gt; 3     3    5          2</span></span>
+<span><span class="co">#&gt; 4     4    4          2</span></span>
+<span><span class="co">#&gt; 5     5    3          2</span></span>
+<span><span class="co">#&gt; 6     6    3          2</span></span>
+<span><span class="co">#&gt;                                                                                                                                                    profile</span></span>
+<span><span class="co">#&gt; 1                                                             Alerte Produit | Viande de dinde | Pays de la Loire | Alimentation humaine | Abattage | 2020</span></span>
+<span><span class="co">#&gt; 2                     Alerte Produit | Bovins | Auvergne Rhone Alpes | Santé et production animales | Lieu d'exploitation, d'élevage, ou de culture | 2020</span></span>
+<span><span class="co">#&gt; 3                                          Surveillance | Viande de dinde | Nouvelle Aquitaine | Alimentation humaine | Transformation industrielle | 2020</span></span>
+<span><span class="co">#&gt; 4                                   Surveillance | Viande porcine | Provence Alpes Cote d Azur | Alimentation humaine | Transformation industrielle | 2020</span></span>
+<span><span class="co">#&gt; 5 Programmes de contrôle et d'éradication | Gallus gallus | Bretagne | Santé et production animales | Lieu d'exploitation, d'élevage, ou de culture | 2020</span></span>
+<span><span class="co">#&gt; 6                                                            Surveillance | Viande de canard | Nouvelle Aquitaine | Alimentation humaine | Abattage | 2020</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="exporting-the-result-export_selection">Exporting the result: export_selection<a class="anchor" aria-label="anchor" href="#exporting-the-result-export_selection"></a>
+</h3>
+<p><code><a href="../reference/export_selection.html">export_selection()</a></code> returns — and optionally writes to a
+CSV file — the original metadata table with the columns added by
+<code><a href="../reference/select_strains.html">select_strains()</a></code>. The file can be opened in a spreadsheet
+and filtered on <code>selected</code> to get the list of strains to
+sequence.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span></span>
+<span>  <span class="va">salmonella_strains</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>  id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; no duplicate ID</span></span>
+<span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/select_strains.html">select_strains</a></span><span class="op">(</span><span class="va">prepared_data</span>, n_max <span class="op">=</span> <span class="fl">20</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">selection</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/export_selection.html">export_selection</a></span><span class="op">(</span><span class="va">res</span>, data <span class="op">=</span> <span class="va">salmonella_strains</span>, id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span><span class="op">)</span></span>
+<span><span class="co"># the strains to sequence, with all their metadata</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">selection</span><span class="op">[</span><span class="va">selection</span><span class="op">$</span><span class="va">selected</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IDENTIFIANT"</span>, <span class="st">"REGION"</span>, <span class="st">"status"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      IDENTIFIANT                     REGION   status</span></span>
+<span><span class="co">#&gt; 6  2020LSAL00177                   Bretagne selected</span></span>
+<span><span class="co">#&gt; 14 2020LSAL00454            Hauts de France selected</span></span>
+<span><span class="co">#&gt; 20 2020LSAL00487              Ile de France selected</span></span>
+<span><span class="co">#&gt; 22 2020LSAL00506                       &lt;NA&gt; selected</span></span>
+<span><span class="co">#&gt; 27 2020LSAL00549 Provence Alpes Cote d Azur selected</span></span>
+<span><span class="co">#&gt; 36 2020LSAL00660                  Occitanie selected</span></span>
+<span><span class="co"># write the table to a CSV file</span></span>
+<span><span class="fu"><a href="../reference/export_selection.html">export_selection</a></span><span class="op">(</span><span class="va">res</span>, data <span class="op">=</span> <span class="va">salmonella_strains</span>, id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>,</span>
+<span>                 file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"selection.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; selection written to /tmp/RtmpyGhZ1r/selection.csv</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="reporting-report_selection">Reporting: report_selection<a class="anchor" aria-label="anchor" href="#reporting-report_selection"></a>
+</h3>
+<p><code><a href="../reference/report_selection.html">report_selection()</a></code> writes an HTML report of the
+selection: the parameters, the silhouette curve with the optimum and the
+budget, the list of the selected strains, the optimal groups that are
+not represented and the size of each cluster. Together with the CSV file
+of <code><a href="../reference/export_selection.html">export_selection()</a></code>, it documents the choice of the
+strains to sequence.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span></span>
+<span>  <span class="va">salmonella_strains</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>  id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; no duplicate ID</span></span>
+<span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
+<span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/select_strains.html">select_strains</a></span><span class="op">(</span><span class="va">prepared_data</span>, n_max <span class="op">=</span> <span class="fl">20</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"rmarkdown"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/pandoc_available.html" class="external-link">pandoc_available</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/report_selection.html">report_selection</a></span><span class="op">(</span><span class="va">res</span>, file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">"selection.html"</span><span class="op">)</span>,</span>
+<span>                   data <span class="op">=</span> <span class="va">salmonella_strains</span>, id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co">#&gt; selection written to /tmp/RtmpyGhZ1r/selection.csv</span></span>
+<span><span class="co">#&gt; report written to /tmp/RtmpyGhZ1r/selection.html</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -279,10 +454,10 @@ three functions: <code><a href="../reference/prepare_upset.html">prepare_upset()
 data: there is one column per modality of each metadata (named
 <code>&lt;metadata&gt; _ &lt;modality&gt;</code>), filled with 1 if the
 strain has this modality and 0 otherwise.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
-<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
-<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>                               id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
 <span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
 <span><span class="va">upset_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_upset.html">prepare_upset</a></span><span class="op">(</span><span class="va">prepared_data</span><span class="op">)</span></span>
@@ -307,7 +482,7 @@ strain has this modality and 0 otherwise.</p>
 <span><span class="co">#&gt; 2020LSAL00176                           0</span></span></code></pre></div>
 <p>The binary table can be used to visualise the groups of identical
 strains in an UpSet plot, for instance with the {UpSetR} package:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the 12 most frequent modalities</span></span>
 <span><span class="fu">UpSetR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/UpSetR/man/upset.html" class="external-link">upset</a></span><span class="op">(</span><span class="va">upset_data</span>, nsets <span class="op">=</span> <span class="fl">12</span>, order.by <span class="op">=</span> <span class="st">"freq"</span>, nintersects <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>              mb.ratio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.55</span>, <span class="fl">0.45</span><span class="op">)</span>, text.scale <span class="op">=</span> <span class="fl">1.1</span><span class="op">)</span></span>
@@ -342,10 +517,10 @@ strains in an UpSet plot, for instance with the {UpSetR} package:</p>
 concatenating the columns of the binary table. Strains with identical
 profiles are put in the same group; a profile shared by no other strain
 forms a group with a single strain.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
-<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
-<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>                               id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
 <span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
 <span><span class="va">upset_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_upset.html">prepare_upset</a></span><span class="op">(</span><span class="va">prepared_data</span><span class="op">)</span></span>
@@ -361,10 +536,10 @@ forms a group with a single strain.</p>
 A group containing a single strain gets this strain; since all strains
 of a larger group are identical, one of them is chosen at random. Use
 <code>seed</code> to make the selection reproducible.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
-<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
-<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>                               id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
 <span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
 <span><span class="va">upset_profiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/define_profiles.html">define_profiles</a></span><span class="op">(</span><span class="fu"><a href="../reference/prepare_upset.html">prepare_upset</a></span><span class="op">(</span><span class="va">prepared_data</span><span class="op">)</span><span class="op">)</span></span>

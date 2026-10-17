@@ -41,7 +41,7 @@ remotes::install_github("lguillier/strainselect_package", build_vignettes = TRUE
 ## Example
 
 The package ships with `salmonella_strains`, an example table of 100
-*Salmonella* strains described by 24 variables. We base the selection on
+*Salmonella* strains described by 22 variables. We base the selection on
 6 of them and on the year of sampling.
 
 ``` r
@@ -66,7 +66,50 @@ head(prepared_data, 3)
 #> 2020LSAL00163 Alimentation humaine Transformation industrielle  2020
 ```
 
-### Clustering method: a fixed number of strains
+### Quick start: how many strains, and which ones?
+
+[`select_strains()`](https://lguillier.github.io/strainselect_package/reference/select_strains.md)
+finds the optimal number of strains and takes into account the maximum
+number of strains you can sequence (`n_max`):
+
+``` r
+
+res <- select_strains(prepared_data, n_max = 20, seed = 1)
+res
+#> Strain selection (clustering method)
+#>   strains: 100 - distinct profiles: 61 
+#>   optimal number of clusters (k_opt): 61 
+#>   maximum number of strains (n_max): 20 
+#>   selected strains: 20 (selected: 20) 
+#>   optimal groups not represented: 41 out of 61
+```
+
+The same with the profile method (one strain per group of identical
+strains, largest groups first):
+
+``` r
+
+select_strains(prepared_data, n_max = 20, method = "profile", seed = 1)
+#> Strain selection (profile method)
+#>   strains: 100 - distinct profiles: 61 
+#>   groups of identical strains: 61 
+#>   maximum number of strains (n_max): 20 
+#>   selected strains: 20 (selected: 20) 
+#>   groups not represented: 41 out of 61
+```
+
+Export the original metadata with the selection, and write an HTML
+report:
+
+``` r
+
+export_selection(res, data = salmonella_strains, id = "IDENTIFIANT",
+                 file = "selection.csv")
+report_selection(res, file = "selection_report.html",
+                 data = salmonella_strains, id = "IDENTIFIANT")
+```
+
+### Clustering method, step by step
 
 The average silhouette width helps choosing the number of clusters: look
 for a maximum or a plateau.
@@ -149,7 +192,19 @@ Union).
 - [`prepare_input()`](https://lguillier.github.io/strainselect_package/reference/prepare_input.md)
   : Prepare the metadata table used for strain selection
 
-## Clustering method
+## Strain selection in one step
+
+Optimal number of strains, maximum number of strains, export and report.
+
+- [`select_strains()`](https://lguillier.github.io/strainselect_package/reference/select_strains.md)
+  : Select strains to sequence, with or without a maximum number of
+  strains
+- [`export_selection()`](https://lguillier.github.io/strainselect_package/reference/export_selection.md)
+  : Export the strain selection with the original metadata
+- [`report_selection()`](https://lguillier.github.io/strainselect_package/reference/report_selection.md)
+  : Write an HTML report of the strain selection
+
+## Clustering method, step by step
 
 When the number of strains that can be sequenced is limited.
 

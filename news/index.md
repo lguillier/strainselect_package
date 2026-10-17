@@ -2,6 +2,33 @@
 
 ## strainselect (development version)
 
+- New
+  [`select_strains()`](https://lguillier.github.io/strainselect_package/reference/select_strains.md):
+  the clustering method in one step. It finds the optimal number of
+  clusters (largest average silhouette width) and selects the strains
+  taking into account the maximum number of strains that can be
+  sequenced (`n_max`): optimal strains completed with supplementary
+  strains when `n_max` is larger than the optimum (`fill = TRUE`), or
+  the best coverage with `n_max` strains and the list of the optimal
+  groups that are not represented when it is smaller.
+  [`print()`](https://rdrr.io/r/base/print.html) and
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) methods. With
+  `method = "profile"`, the same logic applies to the profile method:
+  groups of identical strains sorted by decreasing size, one strain in
+  each of the `n_max` largest groups when `n_max` is smaller than the
+  number of groups, and supplementary strains added turn by turn (from
+  the largest group to the smallest) when it is larger.
+- New
+  [`export_selection()`](https://lguillier.github.io/strainselect_package/reference/export_selection.md):
+  the original metadata table with the selection (`cluster`,
+  `optimal_group`, `selected`, `status`, `representative`,
+  `group_represented`), optionally written to a CSV file.
+- New
+  [`report_selection()`](https://lguillier.github.io/strainselect_package/reference/report_selection.md):
+  HTML report of the selection (summary, silhouette curve, selected
+  strains, optimal groups not represented, clusters, columns of the CSV
+  file used or not for the selection), written with the CSV file of the
+  selection.
 - [`prepare_input()`](https://lguillier.github.io/strainselect_package/reference/prepare_input.md)
   accepts column **names** as well as positions for `col_select`, `id`
   and `date`, with a clear error for unknown columns.
@@ -14,6 +41,9 @@
   as the package is loaded); the examples, the vignette and the README
   use it. The CSV file `data_test.csv` is kept to show the expected
   input format.
+- The columns `REF_PARTENAIRE` and `LABORATORY_CODE` (partner laboratory
+  information) are removed from the example data, which now has 22
+  columns. The examples use column names rather than positions.
 - `citation("strainselect")` gives the reference of the package; a
   `CITATION.cff` file adds a “Cite this repository” button on GitHub.
 - The old `How_to_use_Strainselect/` folder and `.Rhistory` are removed

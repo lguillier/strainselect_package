@@ -13,19 +13,11 @@ salmonella_strains
 
 ## Format
 
-A data frame with 100 rows (one per strain) and 24 columns:
+A data frame with 100 rows (one per strain) and 22 columns:
 
 - IDENTIFIANT:
 
   strain identifier (unique);
-
-- REF_PARTENAIRE:
-
-  reference of the strain at the partner laboratory;
-
-- LABORATORY_CODE:
-
-  code of the partner laboratory;
 
 - SEROTYPE:
 

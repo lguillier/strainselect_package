@@ -95,14 +95,17 @@ weights.</p></dd>
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other clustering method:
 <code><a href="cstats_table.html">cstats_table()</a></code>,
-<code><a href="select_silhouette.html">select_silhouette()</a></code></p></div>
+<code><a href="export_selection.html">export_selection()</a></code>,
+<code><a href="report_selection.html">report_selection()</a></code>,
+<code><a href="select_silhouette.html">select_silhouette()</a></code>,
+<code><a href="select_strains.html">select_strains()</a></code></p></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span></span>
-<span class="r-in"><span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                               id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> no duplicate ID</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span>
 <span class="r-in"><span><span class="va">gower</span> <span class="op">&lt;-</span> <span class="fu">assess_gower</span><span class="op">(</span><span class="va">prepared_data</span>, graph <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
