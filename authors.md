@@ -10,7 +10,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/lguillier/strainselect_package/blob/master/inst/CITATION)
+[`inst/CITATION`](https://github.com/lguillier/strainselect_package/blob/v0.2.0/inst/CITATION)
 
 Vallée M, Guillier L (2026). strainselect: Select Bacterial Strains to
 Sequence Based on Their Metadata. R package version 0.2.0.

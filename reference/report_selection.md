@@ -82,6 +82,6 @@ if (requireNamespace("rmarkdown", quietly = TRUE) && rmarkdown::pandoc_available
   report_selection(res, file = file.path(tempdir(), "selection.html"),
                    data = salmonella_strains, id = "IDENTIFIANT")
 }
-#> selection written to /tmp/RtmpDsZD3S/selection.csv
-#> report written to /tmp/RtmpDsZD3S/selection.html
+#> selection written to /tmp/RtmpKHrqO4/selection.csv
+#> report written to /tmp/RtmpKHrqO4/selection.html
 ```

@@ -417,7 +417,7 @@ head(selection[selection$selected, c("IDENTIFIANT", "REGION", "status")])
 # write the table to a CSV file
 export_selection(res, data = salmonella_strains, id = "IDENTIFIANT",
                  file = file.path(tempdir(), "selection.csv"))
-#> selection written to /tmp/RtmpdnOr0x/selection.csv
+#> selection written to /tmp/RtmpHmJ1ES/selection.csv
 ```
 
 ### Reporting: report_selection
@@ -444,8 +444,8 @@ if (requireNamespace("rmarkdown", quietly = TRUE) && rmarkdown::pandoc_available
   report_selection(res, file = file.path(tempdir(), "selection.html"),
                    data = salmonella_strains, id = "IDENTIFIANT")
 }
-#> selection written to /tmp/RtmpdnOr0x/selection.csv
-#> report written to /tmp/RtmpdnOr0x/selection.html
+#> selection written to /tmp/RtmpHmJ1ES/selection.csv
+#> report written to /tmp/RtmpHmJ1ES/selection.html
 ```
 
 ## Profile method
