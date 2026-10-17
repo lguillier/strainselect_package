@@ -92,12 +92,27 @@ is represented.</li>
 </ul>
 <p>Both methods start with <code><a href="../reference/prepare_input.html">prepare_input()</a></code>, which cleans
 the raw table.</p>
-<p>The examples below use <code>data_test.csv</code>, a table of 100
-<em>Salmonella</em> strains described by 24 variables, shipped with the
-package. The selection is based on 6 variables: <code>CONTEXTE</code>,
-<code>MATRICE1</code>, <code>REGION</code>, <code>SECTEUR</code>,
-<code>LIEUPVT</code> and the year extracted from
+<p>The examples below use <code>salmonella_strains</code>, a table of
+100 <em>Salmonella</em> strains described by 24 variables, shipped with
+the package. The selection is based on 6 variables:
+<code>CONTEXTE</code>, <code>MATRICE1</code>, <code>REGION</code>,
+<code>SECTEUR</code>, <code>LIEUPVT</code> and the year extracted from
 <code>DATE_PRELEVEMENT</code>.</p>
+</div>
+<div class="section level2">
+<h2 id="example-data-salmonella_strains">Example data: salmonella_strains<a class="anchor" aria-label="anchor" href="#example-data-salmonella_strains"></a>
+</h2>
+<p><code>salmonella_strains</code> is available as soon as the package
+is loaded. The same table is also shipped as a CSV file (<code>;</code>
+separator), which shows the expected format of an input file:
+<code>system.file("data_test.csv", package = "strainselect")</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">salmonella_strains</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"IDENTIFIANT"</span>, <span class="st">"CONTEXTE"</span>, <span class="st">"REGION"</span>, <span class="st">"DATE_PRELEVEMENT"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 'data.frame':    100 obs. of  4 variables:</span></span>
+<span><span class="co">#&gt;  $ IDENTIFIANT     : chr  "2020LSAL00151" "2020LSAL00152" "2020LSAL00163" "2020LSAL00167" ...</span></span>
+<span><span class="co">#&gt;  $ CONTEXTE        : chr  "Surveillance" "Surveillance" "Surveillance" "Surveillance" ...</span></span>
+<span><span class="co">#&gt;  $ REGION          : chr  "Auvergne Rhone Alpes" "Auvergne Rhone Alpes" "Nouvelle Aquitaine" "Occitanie" ...</span></span>
+<span><span class="co">#&gt;  $ DATE_PRELEVEMENT: chr  "09/01/2020" "09/01/2020" "07/01/2020" "14/01/2020" ...</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="preparing-the-data-prepare_input">Preparing the data: prepare_input<a class="anchor" aria-label="anchor" href="#preparing-the-data-prepare_input"></a>
@@ -122,9 +137,8 @@ positions. Dates are read with <code>date_format</code>,
 for instance <code>date_format = "%Y-%m-%d"</code> for dates such as
 <code>2020-01-09</code>. A date column already of class
 <code>Date</code> is used as is.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datafile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data_test.csv"</span>, package <span class="op">=</span> <span class="st">"strainselect"</span><span class="op">)</span></span>
-<span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">datafile</span>, sep <span class="op">=</span> <span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
 <span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span></span>
 <span>  <span class="va">raw_data</span>,</span>
 <span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
@@ -176,9 +190,8 @@ metadata. Weights can be given to the metadata to adjust their
 importance in the clustering. A hierarchical clustering with complete
 linkage is then performed on this matrix, and the dendrogram is drawn
 when <code>graph = TRUE</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datafile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data_test.csv"</span>, package <span class="op">=</span> <span class="st">"strainselect"</span><span class="op">)</span></span>
-<span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">datafile</span>, sep <span class="op">=</span> <span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
 <span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
 <span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
@@ -198,9 +211,8 @@ number of clusters is marked by a maximum or a plateau of the curve. The
 idea is to test a large number of clusters without exceeding the number
 of strains that can be sequenced; a larger <code>step</code> reduces the
 computing time.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datafile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data_test.csv"</span>, package <span class="op">=</span> <span class="st">"strainselect"</span><span class="op">)</span></span>
-<span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">datafile</span>, sep <span class="op">=</span> <span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
 <span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
 <span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
@@ -214,7 +226,7 @@ computing time.</p>
 <span><span class="co">#&gt; testing 40 clusters</span></span>
 <span><span class="co">#&gt; testing 50 clusters</span></span></code></pre></div>
 <p><img src="get-started_files/figure-html/examples-cstats_table-1.png" class="r-plt" alt="" width="700"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stats</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cluster.number"</span>, <span class="st">"avg.silwidth"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;         cluster.number avg.silwidth</span></span>
 <span><span class="co">#&gt; Test 10             10         0.29</span></span>
@@ -233,9 +245,8 @@ cluster, the strain with the largest silhouette width — i.e. the best
 clustered strain — is selected. When several strains share the largest
 silhouette width in a cluster, one of them is chosen at random; use
 <code>seed</code> to make this choice reproducible.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datafile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data_test.csv"</span>, package <span class="op">=</span> <span class="st">"strainselect"</span><span class="op">)</span></span>
-<span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">datafile</span>, sep <span class="op">=</span> <span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
 <span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
 <span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
@@ -268,9 +279,8 @@ three functions: <code><a href="../reference/prepare_upset.html">prepare_upset()
 data: there is one column per modality of each metadata (named
 <code>&lt;metadata&gt; _ &lt;modality&gt;</code>), filled with 1 if the
 strain has this modality and 0 otherwise.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datafile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data_test.csv"</span>, package <span class="op">=</span> <span class="st">"strainselect"</span><span class="op">)</span></span>
-<span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">datafile</span>, sep <span class="op">=</span> <span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
 <span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
 <span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
@@ -297,7 +307,7 @@ strain has this modality and 0 otherwise.</p>
 <span><span class="co">#&gt; 2020LSAL00176                           0</span></span></code></pre></div>
 <p>The binary table can be used to visualise the groups of identical
 strains in an UpSet plot, for instance with the {UpSetR} package:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># the 12 most frequent modalities</span></span>
 <span><span class="fu">UpSetR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/UpSetR/man/upset.html" class="external-link">upset</a></span><span class="op">(</span><span class="va">upset_data</span>, nsets <span class="op">=</span> <span class="fl">12</span>, order.by <span class="op">=</span> <span class="st">"freq"</span>, nintersects <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>              mb.ratio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.55</span>, <span class="fl">0.45</span><span class="op">)</span>, text.scale <span class="op">=</span> <span class="fl">1.1</span><span class="op">)</span></span>
@@ -332,9 +342,8 @@ strains in an UpSet plot, for instance with the {UpSetR} package:</p>
 concatenating the columns of the binary table. Strains with identical
 profiles are put in the same group; a profile shared by no other strain
 forms a group with a single strain.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datafile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data_test.csv"</span>, package <span class="op">=</span> <span class="st">"strainselect"</span><span class="op">)</span></span>
-<span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">datafile</span>, sep <span class="op">=</span> <span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
 <span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
 <span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
@@ -352,9 +361,8 @@ forms a group with a single strain.</p>
 A group containing a single strain gets this strain; since all strains
 of a larger group are identical, one of them is chosen at random. Use
 <code>seed</code> to make the selection reproducible.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">datafile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data_test.csv"</span>, package <span class="op">=</span> <span class="st">"strainselect"</span><span class="op">)</span></span>
-<span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">datafile</span>, sep <span class="op">=</span> <span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="va">salmonella_strains</span></span>
 <span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
 <span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>

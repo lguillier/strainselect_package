@@ -32,10 +32,27 @@ Both methods start with
 [`prepare_input()`](https://lguillier.github.io/strainselect_package/reference/prepare_input.md),
 which cleans the raw table.
 
-The examples below use `data_test.csv`, a table of 100 *Salmonella*
+The examples below use `salmonella_strains`, a table of 100 *Salmonella*
 strains described by 24 variables, shipped with the package. The
 selection is based on 6 variables: `CONTEXTE`, `MATRICE1`, `REGION`,
 `SECTEUR`, `LIEUPVT` and the year extracted from `DATE_PRELEVEMENT`.
+
+## Example data: salmonella_strains
+
+`salmonella_strains` is available as soon as the package is loaded. The
+same table is also shipped as a CSV file (`;` separator), which shows
+the expected format of an input file:
+`system.file("data_test.csv", package = "strainselect")`.
+
+``` r
+
+str(salmonella_strains[, c("IDENTIFIANT", "CONTEXTE", "REGION", "DATE_PRELEVEMENT")])
+#> 'data.frame':    100 obs. of  4 variables:
+#>  $ IDENTIFIANT     : chr  "2020LSAL00151" "2020LSAL00152" "2020LSAL00163" "2020LSAL00167" ...
+#>  $ CONTEXTE        : chr  "Surveillance" "Surveillance" "Surveillance" "Surveillance" ...
+#>  $ REGION          : chr  "Auvergne Rhone Alpes" "Auvergne Rhone Alpes" "Nouvelle Aquitaine" "Occitanie" ...
+#>  $ DATE_PRELEVEMENT: chr  "09/01/2020" "09/01/2020" "07/01/2020" "14/01/2020" ...
+```
 
 ## Preparing the data: prepare_input
 
@@ -61,8 +78,7 @@ already of class `Date` is used as is.
 
 ``` r
 
-datafile <- system.file("data_test.csv", package = "strainselect")
-raw_data <- read.csv(datafile, sep = ";", header = TRUE)
+raw_data <- salmonella_strains
 prepared_data <- prepare_input(
   raw_data,
   col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
@@ -120,8 +136,7 @@ matrix, and the dendrogram is drawn when `graph = TRUE`.
 
 ``` r
 
-datafile <- system.file("data_test.csv", package = "strainselect")
-raw_data <- read.csv(datafile, sep = ";", header = TRUE)
+raw_data <- salmonella_strains
 prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
                                id = 1, date = 17)
 #> no duplicate ID
@@ -146,8 +161,7 @@ time.
 
 ``` r
 
-datafile <- system.file("data_test.csv", package = "strainselect")
-raw_data <- read.csv(datafile, sep = ";", header = TRUE)
+raw_data <- salmonella_strains
 prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
                                id = 1, date = 17)
 #> no duplicate ID
@@ -187,8 +201,7 @@ reproducible.
 
 ``` r
 
-datafile <- system.file("data_test.csv", package = "strainselect")
-raw_data <- read.csv(datafile, sep = ";", header = TRUE)
+raw_data <- salmonella_strains
 prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
                                id = 1, date = 17)
 #> no duplicate ID
@@ -226,8 +239,7 @@ modality of each metadata (named `<metadata> _ <modality>`), filled with
 
 ``` r
 
-datafile <- system.file("data_test.csv", package = "strainselect")
-raw_data <- read.csv(datafile, sep = ";", header = TRUE)
+raw_data <- salmonella_strains
 prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
                                id = 1, date = 17)
 #> no duplicate ID
@@ -297,8 +309,7 @@ a profile shared by no other strain forms a group with a single strain.
 
 ``` r
 
-datafile <- system.file("data_test.csv", package = "strainselect")
-raw_data <- read.csv(datafile, sep = ";", header = TRUE)
+raw_data <- salmonella_strains
 prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
                                id = 1, date = 17)
 #> no duplicate ID
@@ -320,8 +331,7 @@ them is chosen at random. Use `seed` to make the selection reproducible.
 
 ``` r
 
-datafile <- system.file("data_test.csv", package = "strainselect")
-raw_data <- read.csv(datafile, sep = ";", header = TRUE)
+raw_data <- salmonella_strains
 prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
                                id = 1, date = 17)
 #> no duplicate ID

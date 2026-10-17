@@ -42,6 +42,9 @@
 <code><a href="../reference/prepare_input.html">prepare_input()</a></code> accepts column <strong>names</strong> as well as positions for <code>col_select</code>, <code>id</code> and <code>date</code>, with a clear error for unknown columns.</li>
 <li>
 <code><a href="../reference/prepare_input.html">prepare_input()</a></code> reads dates with the new <code>date_format</code> argument (<code>"%d/%m/%Y"</code> by default) and accepts <code>Date</code> columns; unreadable dates give <code>"unknown"</code>. <code>date = NULL</code> is the new default for “no date” (<code>0</code> still works).</li>
+<li>New dataset <code>salmonella_strains</code> (the example table, available as soon as the package is loaded); the examples, the vignette and the README use it. The CSV file <code>data_test.csv</code> is kept to show the expected input format.</li>
+<li>
+<code>citation("strainselect")</code> gives the reference of the package; a <code>CITATION.cff</code> file adds a “Cite this repository” button on GitHub.</li>
 <li>The old <code>How_to_use_Strainselect/</code> folder and <code>.Rhistory</code> are removed from the repository: their content is now in the “Get started” vignette.</li>
 </ul></div>
     <div class="section level2">

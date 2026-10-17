@@ -40,19 +40,16 @@ remotes::install_github("lguillier/strainselect_package", build_vignettes = TRUE
 
 ## Example
 
-The package ships with an example table of 100 *Salmonella* strains
-described by 24 variables. We base the selection on 6 of them and on the
-year of sampling.
+The package ships with `salmonella_strains`, an example table of 100
+*Salmonella* strains described by 24 variables. We base the selection on
+6 of them and on the year of sampling.
 
 ``` r
 
 library(strainselect)
 
-datafile <- system.file("data_test.csv", package = "strainselect")
-raw_data <- read.csv(datafile, sep = ";")
-
 prepared_data <- prepare_input(
-  raw_data,
+  salmonella_strains,
   col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
   id = "IDENTIFIANT", date = "DATE_PRELEVEMENT", year = TRUE
 )

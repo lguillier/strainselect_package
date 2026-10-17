@@ -1,6 +1,11 @@
 # Package index
 
-## Data preparation
+## Data and data preparation
+
+- [`salmonella_strains`](https://lguillier.github.io/strainselect_package/reference/salmonella_strains.md)
+  :
+
+  Example metadata of 100 *Salmonella* strains
 
 - [`prepare_input()`](https://lguillier.github.io/strainselect_package/reference/prepare_input.md)
   : Prepare the metadata table used for strain selection

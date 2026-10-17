@@ -70,11 +70,15 @@ identifiers) and one factor column per selected metadata, followed by
 `ANNEE` and/or `MOIS` when a date column is used. Dates that cannot be
 read give `"unknown"`.
 
+## See also
+
+Other data preparation:
+[`salmonella_strains`](https://lguillier.github.io/strainselect_package/reference/salmonella_strains.md)
+
 ## Examples
 
 ``` r
-datafile <- system.file("data_test.csv", package = "strainselect")
-raw_data <- read.csv(datafile, sep = ";", header = TRUE)
+raw_data <- salmonella_strains
 prepared_data <- prepare_input(
   raw_data,
   col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
