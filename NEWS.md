@@ -1,4 +1,4 @@
-# strainselect (development version)
+# strainselect 0.2.0
 
 * New `select_strains()`: the clustering method in one step. It finds the
   optimal number of clusters (largest average silhouette width) and selects

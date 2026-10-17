@@ -1,6 +1,6 @@
 Package: strainselect
 Title: Select Bacterial Strains to Sequence Based on Their Metadata
-Version: 0.1.0.9000
+Version: 0.2.0
 Authors@R: c(
     person("Marie", "Vallée", , "marie.vallee@anses.fr", role = "aut",
            comment = c(ORCID = "0000-0002-4233-8400")),
