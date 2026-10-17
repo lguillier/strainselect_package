@@ -77,18 +77,35 @@ prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", 
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 gower <- assess_gower(prepared_data, graph = FALSE)
 stats <- cstats_table(dist = gower$gower_dist, tree = gower$aggl.clust.c,
-                      k = 50, step = 10)
+                      k = 60, step = 2)
+#> testing 2 clusters
+#> testing 4 clusters
+#> testing 6 clusters
+#> testing 8 clusters
 #> testing 10 clusters
+#> testing 12 clusters
+#> testing 14 clusters
+#> testing 16 clusters
+#> testing 18 clusters
 #> testing 20 clusters
+#> testing 22 clusters
+#> testing 24 clusters
+#> testing 26 clusters
+#> testing 28 clusters
 #> testing 30 clusters
+#> testing 32 clusters
+#> testing 34 clusters
+#> testing 36 clusters
+#> testing 38 clusters
 #> testing 40 clusters
+#> testing 42 clusters
+#> testing 44 clusters
+#> testing 46 clusters
+#> testing 48 clusters
 #> testing 50 clusters
-
-stats[, c("cluster.number", "avg.silwidth")]
-#>         cluster.number avg.silwidth
-#> Test 10             10         0.29
-#> Test 20             20         0.41
-#> Test 30             30         0.39
-#> Test 40             40         0.49
-#> Test 50             50         0.48
+#> testing 52 clusters
+#> testing 54 clusters
+#> testing 56 clusters
+#> testing 58 clusters
+#> testing 60 clusters
 ```

@@ -168,26 +168,52 @@ prepared_data <- prepare_input(raw_data, col_select = c("CONTEXTE", "MATRICE1", 
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 gower <- assess_gower(prepared_data, graph = FALSE)
 stats <- cstats_table(dist = gower$gower_dist, tree = gower$aggl.clust.c,
-                      k = 50, step = 10)
+                      k = 60, step = 2)
+#> testing 2 clusters
+#> testing 4 clusters
+#> testing 6 clusters
+#> testing 8 clusters
 #> testing 10 clusters
+#> testing 12 clusters
+#> testing 14 clusters
+#> testing 16 clusters
+#> testing 18 clusters
 #> testing 20 clusters
+#> testing 22 clusters
+#> testing 24 clusters
+#> testing 26 clusters
+#> testing 28 clusters
 #> testing 30 clusters
+#> testing 32 clusters
+#> testing 34 clusters
+#> testing 36 clusters
+#> testing 38 clusters
 #> testing 40 clusters
+#> testing 42 clusters
+#> testing 44 clusters
+#> testing 46 clusters
+#> testing 48 clusters
 #> testing 50 clusters
+#> testing 52 clusters
+#> testing 54 clusters
+#> testing 56 clusters
+#> testing 58 clusters
+#> testing 60 clusters
 ```
 
 ![](get-started_files/figure-html/examples-cstats_table-1.png)
 
-``` r
-
-stats[, c("cluster.number", "avg.silwidth")]
-#>         cluster.number avg.silwidth
-#> Test 10             10         0.29
-#> Test 20             20         0.41
-#> Test 30             30         0.39
-#> Test 40             40         0.49
-#> Test 50             50         0.48
-```
+With a small step (here every 2 clusters), the curve shows two plateaus.
+The average silhouette width jumps to about 0.45 at 16 clusters and then
+stays between 0.39 and 0.43 up to 30 clusters: **about 15 clusters** is
+a first level that already captures the main structure of the
+collection. It jumps again to about 0.47 at 34 clusters and stays
+between 0.47 and 0.51 up to 52 clusters: **about 33 clusters** is a
+second, finer level. Beyond, the curve increases up to the number of
+distinct profiles (61), where every profile is isolated: with
+categorical metadata, this maximum is not a natural level of grouping.
+The number of strains to sequence can be chosen at one of the two
+plateaus, depending on the resources available.
 
 ### Selecting the strains: select_silhouette
 
@@ -342,7 +368,13 @@ head(res_profile$groups)
 #> 4                                   Surveillance | Viande porcine | Provence Alpes Cote d Azur | Alimentation humaine | Transformation industrielle | 2020
 #> 5 Programmes de contrôle et d'éradication | Gallus gallus | Bretagne | Santé et production animales | Lieu d'exploitation, d'élevage, ou de culture | 2020
 #> 6                                                            Surveillance | Viande de canard | Nouvelle Aquitaine | Alimentation humaine | Abattage | 2020
+# profile method, budget smaller than the number of distinct profiles:
+# one strain in each of the 20 largest groups
+res_profile_20 <- select_strains(prepared_data, n_max = 20, method = "profile", seed = 1)
+plot(res_profile_20)
 ```
+
+![](get-started_files/figure-html/examples-select_strains-3.png)
 
 ### Exporting the result: export_selection
 
@@ -376,7 +408,7 @@ head(selection[selection$selected, c("IDENTIFIANT", "REGION", "status")])
 # write the table to a CSV file
 export_selection(res, data = salmonella_strains, id = "IDENTIFIANT",
                  file = file.path(tempdir(), "selection.csv"))
-#> selection written to /tmp/RtmpyGhZ1r/selection.csv
+#> selection written to /tmp/RtmpQ3y7IA/selection.csv
 ```
 
 ### Reporting: report_selection
@@ -403,8 +435,8 @@ if (requireNamespace("rmarkdown", quietly = TRUE) && rmarkdown::pandoc_available
   report_selection(res, file = file.path(tempdir(), "selection.html"),
                    data = salmonella_strains, id = "IDENTIFIANT")
 }
-#> selection written to /tmp/RtmpyGhZ1r/selection.csv
-#> report written to /tmp/RtmpyGhZ1r/selection.html
+#> selection written to /tmp/RtmpQ3y7IA/selection.csv
+#> report written to /tmp/RtmpQ3y7IA/selection.html
 ```
 
 ## Profile method

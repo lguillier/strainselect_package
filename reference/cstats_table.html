@@ -122,20 +122,38 @@ cluster size columns. Values are rounded to 2 decimals.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span>
 <span class="r-in"><span><span class="va">gower</span> <span class="op">&lt;-</span> <span class="fu"><a href="assess_gower.html">assess_gower</a></span><span class="op">(</span><span class="va">prepared_data</span>, graph <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="fu">cstats_table</span><span class="op">(</span>dist <span class="op">=</span> <span class="va">gower</span><span class="op">$</span><span class="va">gower_dist</span>, tree <span class="op">=</span> <span class="va">gower</span><span class="op">$</span><span class="va">aggl.clust.c</span>,</span></span>
-<span class="r-in"><span>                      k <span class="op">=</span> <span class="fl">50</span>, step <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                      k <span class="op">=</span> <span class="fl">60</span>, step <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 2 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 4 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 6 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 8 clusters</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> testing 10 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 12 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 14 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 16 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 18 clusters</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> testing 20 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 22 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 24 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 26 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 28 clusters</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> testing 30 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 32 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 34 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 36 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 38 clusters</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> testing 40 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 42 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 44 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 46 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 48 clusters</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> testing 50 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 52 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 54 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 56 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 58 clusters</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> testing 60 clusters</span>
 <span class="r-plt img"><img src="cstats_table-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span><span class="va">stats</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cluster.number"</span>, <span class="st">"avg.silwidth"</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         cluster.number avg.silwidth</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test 10             10         0.29</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test 20             20         0.41</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test 30             30         0.39</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test 40             40         0.49</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Test 50             50         0.48</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
