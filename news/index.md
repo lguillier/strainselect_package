@@ -1,6 +1,6 @@
 # Changelog
 
-## strainselect (development version)
+## strainselect 0.2.0
 
 - New
   [`select_strains()`](https://lguillier.github.io/strainselect_package/reference/select_strains.md):

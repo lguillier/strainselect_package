@@ -77,5 +77,5 @@ head(selection[selection$selected, c("IDENTIFIANT", "REGION", "status")])
 # write the table to a CSV file
 export_selection(res, data = salmonella_strains, id = "IDENTIFIANT",
                  file = file.path(tempdir(), "selection.csv"))
-#> selection written to /tmp/Rtmpz8HtE5/selection.csv
+#> selection written to /tmp/RtmpDsZD3S/selection.csv
 ```
