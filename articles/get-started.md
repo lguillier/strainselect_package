@@ -274,11 +274,20 @@ In each cluster, the selected strain is the one with the largest
 silhouette width, i.e. the best clustered one (ties are broken at
 random, use `seed` for reproducibility).
 
-With categorical metadata, identical strains are at distance 0, so the
-optimum is often close to the number of distinct profiles. Supplementary
-strains then mostly have the same metadata as already selected strains:
-they do not add diversity regarding the metadata, but may be useful as
-replicates.
+With categorical metadata and equal weights, identical strains are at
+distance 0 and the optimum is often close to the number of distinct
+profiles: supplementary strains then mostly have the same metadata as
+already selected strains, and add replicates rather than diversity. This
+is not a general rule. The weights change the Gower distances between
+different strains, hence the tree, the silhouette curve and the optimum
+(in the example of this vignette, a weight of 3 on `REGION` lowers the
+optimum from 61 to 22 clusters), and supplementary strains can then add
+new profiles. Conversely, below the optimum, the strains of a cluster
+are similar but not identical. The report written by
+[`report_selection()`](https://lguillier.github.io/strainselect_package/reference/report_selection.md)
+gives, for the actual data, the number of supplementary strains that
+have the same metadata as an already selected strain, and how much the
+strains differ from the selected strain of their cluster.
 
 `select_strains(method = "profile")` applies the same logic to the
 profile method. The strains with identical metadata form groups, sorted
@@ -408,7 +417,7 @@ head(selection[selection$selected, c("IDENTIFIANT", "REGION", "status")])
 # write the table to a CSV file
 export_selection(res, data = salmonella_strains, id = "IDENTIFIANT",
                  file = file.path(tempdir(), "selection.csv"))
-#> selection written to /tmp/RtmpQ3y7IA/selection.csv
+#> selection written to /tmp/Rtmp3wINEr/selection.csv
 ```
 
 ### Reporting: report_selection
@@ -435,8 +444,8 @@ if (requireNamespace("rmarkdown", quietly = TRUE) && rmarkdown::pandoc_available
   report_selection(res, file = file.path(tempdir(), "selection.html"),
                    data = salmonella_strains, id = "IDENTIFIANT")
 }
-#> selection written to /tmp/RtmpQ3y7IA/selection.csv
-#> report written to /tmp/RtmpQ3y7IA/selection.html
+#> selection written to /tmp/Rtmp3wINEr/selection.csv
+#> report written to /tmp/Rtmp3wINEr/selection.html
 ```
 
 ## Profile method
