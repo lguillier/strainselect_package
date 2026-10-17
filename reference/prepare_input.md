@@ -10,11 +10,12 @@ every column to a factor.
 ``` r
 prepare_input(
   data,
-  col_select = seq_along(data),
+  col_select = seq_len(ncol(data)),
   id = 1,
-  date = 0,
+  date = NULL,
   month = FALSE,
   year = TRUE,
+  date_format = "%d/%m/%Y",
   m,
   a
 )
@@ -24,22 +25,22 @@ prepare_input(
 
 - data:
 
-  A data frame with one row per strain.
+  A data frame (or a matrix) with one row per strain.
 
 - col_select:
 
-  Integer vector giving the positions of the metadata columns to keep.
-  The identifier and date columns are always removed from this
-  selection. Defaults to all columns.
+  Names or positions of the metadata columns to keep. The identifier and
+  date columns are always removed from this selection. Defaults to all
+  columns.
 
 - id:
 
-  Position of the column containing the strain identifiers.
+  Name or position of the column containing the strain identifiers.
 
 - date:
 
-  Position of the date column (format `dd/mm/yyyy`), or `0` (default) if
-  no date should be used.
+  Name or position of the date column, or `NULL` (default) if no date
+  should be used. `0` is also accepted for "no date".
 
 - month:
 
@@ -51,6 +52,13 @@ prepare_input(
   If `TRUE` (default), an `ANNEE` column with the year is created from
   the date column.
 
+- date_format:
+
+  Format of the dates, see
+  [`strptime()`](https://rdrr.io/r/base/strptime.html). Defaults to
+  `"%d/%m/%Y"` (e.g. `09/01/2020`). Ignored when the date column is
+  already of class `Date` or `POSIXt`.
+
 - m, a:
 
   Deprecated, use `month` and `year` instead.
@@ -59,15 +67,19 @@ prepare_input(
 
 A data frame with one row per strain (row names are the strain
 identifiers) and one factor column per selected metadata, followed by
-`ANNEE` and/or `MOIS` when a date column is used.
+`ANNEE` and/or `MOIS` when a date column is used. Dates that cannot be
+read give `"unknown"`.
 
 ## Examples
 
 ``` r
 datafile <- system.file("data_test.csv", package = "strainselect")
 raw_data <- read.csv(datafile, sep = ";", header = TRUE)
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17, month = FALSE, year = TRUE)
+prepared_data <- prepare_input(
+  raw_data,
+  col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+  id = "IDENTIFIANT", date = "DATE_PRELEVEMENT", month = FALSE, year = TRUE
+)
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 head(prepared_data)
@@ -92,4 +104,9 @@ head(prepared_data)
 #> 2020LSAL00167                   Transformation industrielle  2020
 #> 2020LSAL00176 Lieu d'exploitation, d'élevage, ou de culture  2020
 #> 2020LSAL00177 Lieu d'exploitation, d'élevage, ou de culture  2020
+# the same with column positions
+prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
+                               id = 1, date = 17)
+#> no duplicate ID
+#> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 ```

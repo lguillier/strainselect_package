@@ -1,5 +1,19 @@
 # Changelog
 
+## strainselect (development version)
+
+- [`prepare_input()`](https://lguillier.github.io/strainselect_package/reference/prepare_input.md)
+  accepts column **names** as well as positions for `col_select`, `id`
+  and `date`, with a clear error for unknown columns.
+- [`prepare_input()`](https://lguillier.github.io/strainselect_package/reference/prepare_input.md)
+  reads dates with the new `date_format` argument (`"%d/%m/%Y"` by
+  default) and accepts `Date` columns; unreadable dates give
+  `"unknown"`. `date = NULL` is the new default for “no date” (`0` still
+  works).
+- The old `How_to_use_Strainselect/` folder and `.Rhistory` are removed
+  from the repository: their content is now in the “Get started”
+  vignette.
+
 ## strainselect 0.1.0
 
 ### Breaking changes

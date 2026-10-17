@@ -48,16 +48,26 @@ only the metadata on which the selection is based.
 - uses the identifiers as row names;
 - keeps only the selected metadata columns;
 - optionally extracts the year (`ANNEE`) and/or the month (`MOIS`) from
-  a date column in the `dd/mm/yyyy` format;
+  a date column;
 - replaces missing values by `"unknown"` and converts every column to a
   factor.
+
+Columns can be given by their names (recommended, as it is easier to
+read and does not depend on the order of the columns) or by their
+positions. Dates are read with `date_format`, `"%d/%m/%Y"`
+(e.g. `09/01/2020`) by default; use for instance
+`date_format = "%Y-%m-%d"` for dates such as `2020-01-09`. A date column
+already of class `Date` is used as is.
 
 ``` r
 
 datafile <- system.file("data_test.csv", package = "strainselect")
 raw_data <- read.csv(datafile, sep = ";", header = TRUE)
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17, month = FALSE, year = TRUE)
+prepared_data <- prepare_input(
+  raw_data,
+  col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+  id = "IDENTIFIANT", date = "DATE_PRELEVEMENT", month = FALSE, year = TRUE
+)
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 head(prepared_data)
@@ -82,6 +92,11 @@ head(prepared_data)
 #> 2020LSAL00167                   Transformation industrielle  2020
 #> 2020LSAL00176 Lieu d'exploitation, d'élevage, ou de culture  2020
 #> 2020LSAL00177 Lieu d'exploitation, d'élevage, ou de culture  2020
+# the same with column positions
+prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
+                               id = 1, date = 17)
+#> no duplicate ID
+#> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 ```
 
 ## Clustering method

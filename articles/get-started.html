@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">strainselect</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,16 +111,25 @@ of duplicated identifiers otherwise);</li>
 <li>uses the identifiers as row names;</li>
 <li>keeps only the selected metadata columns;</li>
 <li>optionally extracts the year (<code>ANNEE</code>) and/or the month
-(<code>MOIS</code>) from a date column in the <code>dd/mm/yyyy</code>
-format;</li>
+(<code>MOIS</code>) from a date column;</li>
 <li>replaces missing values by <code>"unknown"</code> and converts every
 column to a factor.</li>
 </ul>
+<p>Columns can be given by their names (recommended, as it is easier to
+read and does not depend on the order of the columns) or by their
+positions. Dates are read with <code>date_format</code>,
+<code>"%d/%m/%Y"</code> (e.g. <code>09/01/2020</code>) by default; use
+for instance <code>date_format = "%Y-%m-%d"</code> for dates such as
+<code>2020-01-09</code>. A date column already of class
+<code>Date</code> is used as is.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">datafile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data_test.csv"</span>, package <span class="op">=</span> <span class="st">"strainselect"</span><span class="op">)</span></span>
 <span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">datafile</span>, sep <span class="op">=</span> <span class="st">";"</span>, header <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
-<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span>, month <span class="op">=</span> <span class="cn">FALSE</span>, year <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span></span>
+<span>  <span class="va">raw_data</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>  id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span>, month <span class="op">=</span> <span class="cn">FALSE</span>, year <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
 <span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">prepared_data</span><span class="op">)</span></span>
@@ -144,7 +153,12 @@ column to a factor.</li>
 <span><span class="co">#&gt; 2020LSAL00163                   Transformation industrielle  2020</span></span>
 <span><span class="co">#&gt; 2020LSAL00167                   Transformation industrielle  2020</span></span>
 <span><span class="co">#&gt; 2020LSAL00176 Lieu d'exploitation, d'élevage, ou de culture  2020</span></span>
-<span><span class="co">#&gt; 2020LSAL00177 Lieu d'exploitation, d'élevage, ou de culture  2020</span></span></code></pre></div>
+<span><span class="co">#&gt; 2020LSAL00177 Lieu d'exploitation, d'élevage, ou de culture  2020</span></span>
+<span><span class="co"># the same with column positions</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
+<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span><span class="op">)</span></span>
+<span><span class="co">#&gt; no duplicate ID</span></span>
+<span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="clustering-method">Clustering method<a class="anchor" aria-label="anchor" href="#clustering-method"></a>

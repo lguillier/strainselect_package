@@ -51,8 +51,11 @@ library(strainselect)
 datafile <- system.file("data_test.csv", package = "strainselect")
 raw_data <- read.csv(datafile, sep = ";")
 
-prepared_data <- prepare_input(raw_data, col_select = c(7, 10, 13, 14, 17, 24),
-                               id = 1, date = 17, year = TRUE)
+prepared_data <- prepare_input(
+  raw_data,
+  col_select = c("CONTEXTE", "MATRICE1", "REGION", "SECTEUR", "LIEUPVT"),
+  id = "IDENTIFIANT", date = "DATE_PRELEVEMENT", year = TRUE
+)
 #> no duplicate ID
 #> selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE
 head(prepared_data, 3)

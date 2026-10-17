@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">strainselect</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -93,8 +93,11 @@ image
 <span><span class="va">datafile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"data_test.csv"</span>, package <span class="op">=</span> <span class="st">"strainselect"</span><span class="op">)</span></span>
 <span><span class="va">raw_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">datafile</span>, sep <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_input.html">prepare_input</a></span><span class="op">(</span><span class="va">raw_data</span>, col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">13</span>, <span class="fl">14</span>, <span class="fl">17</span>, <span class="fl">24</span><span class="op">)</span>,</span>
-<span>                               id <span class="op">=</span> <span class="fl">1</span>, date <span class="op">=</span> <span class="fl">17</span>, year <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="va">prepared_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/prepare_input.html">prepare_input</a></span><span class="op">(</span></span>
+<span>  <span class="va">raw_data</span>,</span>
+<span>  col_select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CONTEXTE"</span>, <span class="st">"MATRICE1"</span>, <span class="st">"REGION"</span>, <span class="st">"SECTEUR"</span>, <span class="st">"LIEUPVT"</span><span class="op">)</span>,</span>
+<span>  id <span class="op">=</span> <span class="st">"IDENTIFIANT"</span>, date <span class="op">=</span> <span class="st">"DATE_PRELEVEMENT"</span>, year <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; no duplicate ID</span></span>
 <span><span class="co">#&gt; selected metadata: CONTEXTE, MATRICE1, REGION, SECTEUR, LIEUPVT, ANNEE</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">prepared_data</span>, <span class="fl">3</span><span class="op">)</span></span>

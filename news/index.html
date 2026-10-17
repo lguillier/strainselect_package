@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">strainselect</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,14 @@
       <small>Source: <a href="https://github.com/lguillier/strainselect_package/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="strainselect-development-version">strainselect (development version)<a class="anchor" aria-label="anchor" href="#strainselect-development-version"></a></h2>
+<ul><li>
+<code><a href="../reference/prepare_input.html">prepare_input()</a></code> accepts column <strong>names</strong> as well as positions for <code>col_select</code>, <code>id</code> and <code>date</code>, with a clear error for unknown columns.</li>
+<li>
+<code><a href="../reference/prepare_input.html">prepare_input()</a></code> reads dates with the new <code>date_format</code> argument (<code>"%d/%m/%Y"</code> by default) and accepts <code>Date</code> columns; unreadable dates give <code>"unknown"</code>. <code>date = NULL</code> is the new default for “no date” (<code>0</code> still works).</li>
+<li>The old <code>How_to_use_Strainselect/</code> folder and <code>.Rhistory</code> are removed from the repository: their content is now in the “Get started” vignette.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="strainselect-010">strainselect 0.1.0<a class="anchor" aria-label="anchor" href="#strainselect-010"></a></h2>
 <div class="section level3">
