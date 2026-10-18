@@ -7,10 +7,12 @@ bibentry(
   ),
   year = "2026",
   note = paste("R package version", meta$Version),
+  doi = "10.5281/zenodo.23439526",
   url = "https://github.com/lguillier/strainselect_package",
   textVersion = paste0(
     "Vallée M, Guillier L (2026). strainselect: Select Bacterial Strains to ",
     "Sequence Based on Their Metadata. R package version ", meta$Version, ". ",
+    "doi:10.5281/zenodo.23439526. ",
     "https://github.com/lguillier/strainselect_package"
   )
 )
