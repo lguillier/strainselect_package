@@ -1,3 +1,8 @@
+# strainselect (development version)
+
+* The package has a DOI on Zenodo (10.5281/zenodo.23439526): badge in the
+  README, DOI in `citation("strainselect")` and `CITATION.cff`.
+
 # strainselect 0.2.0
 
 * New `select_strains()`: the clustering method in one step. It finds the

@@ -6,6 +6,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/lguillier/strainselect_package/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lguillier/strainselect_package/actions/workflows/R-CMD-check.yaml)
+[![DOI](https://zenodo.org/badge/1422252275.svg)](https://doi.org/10.5281/zenodo.23439526)
 <!-- badges: end -->
 
 {strainselect} helps choosing which bacterial strains to sequence from a

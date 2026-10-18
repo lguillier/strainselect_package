@@ -19,6 +19,14 @@ repository-code: "https://github.com/lguillier/strainselect_package"
 url: "https://lguillier.github.io/strainselect_package/"
 version: "0.2.0"
 date-released: "2026-10-17"
+doi: 10.5281/zenodo.23439526
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23439526
+    description: "Concept DOI (all versions)"
+  - type: doi
+    value: 10.5281/zenodo.23439527
+    description: "DOI of version 0.2.0"
 keywords:
   - R
   - bioinformatics
