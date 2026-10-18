@@ -10,16 +10,18 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/lguillier/strainselect_package/blob/v0.2.0/inst/CITATION)
+[`inst/CITATION`](https://github.com/lguillier/strainselect_package/blob/master/inst/CITATION)
 
 Vallée M, Guillier L (2026). strainselect: Select Bacterial Strains to
-Sequence Based on Their Metadata. R package version 0.2.0.
+Sequence Based on Their Metadata. R package version 0.2.0.9000.
+doi:10.5281/zenodo.23439526.
 https://github.com/lguillier/strainselect_package
 
     @Manual{,
       title = {{strainselect}: Select Bacterial Strains to Sequence Based on Their Metadata},
       author = {Marie Vallée and Laurent Guillier},
       year = {2026},
-      note = {R package version 0.2.0},
+      note = {R package version 0.2.0.9000},
+      doi = {10.5281/zenodo.23439526},
       url = {https://github.com/lguillier/strainselect_package},
     }
